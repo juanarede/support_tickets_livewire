@@ -13,12 +13,20 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('usuario');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('puesto')->nullable();
+            $table->unsignedBigInteger('dependencia')->nullable();
+            $table->string('empresa')->nullable();
             $table->string('password');
+            $table->string('imagen')->nullable();
+            $table->decimal('sueldo', 8, 2)->nullable();
+            $table->enum('role', ['agente', 'usuario_externo']);
             $table->rememberToken();
             $table->timestamps();
+
+           
+            $table->foreign('dependencia')->references('id')->on('users')->onDelete('set null');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -32,7 +40,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable()->index();
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
-            $table->longText('payload');
+            $table->text('payload');
             $table->integer('last_activity')->index();
         });
     }
@@ -47,3 +55,4 @@ return new class extends Migration
         Schema::dropIfExists('sessions');
     }
 };
+

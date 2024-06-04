@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Definir políticas de acceso
+        Gate::define('isAgente', function ($user) {
+            return $user->role === 'agente';
+        });
+
+        Gate::define('isUsuarioExterno', function ($user) {
+            return $user->role === 'usuario_externo';
+        });
     }
 }
+

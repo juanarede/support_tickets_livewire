@@ -18,6 +18,7 @@
         "filepond-plugin-file-validate-size": "^2.2.8",
         "filepond-plugin-image-preview": "^4.6.12",
         "filepond-plugin-image-resize": "^2.0.10",
-        "filepond-plugin-image-validate-size": "^1.2.7"
+        "filepond-plugin-image-validate-size": "^1.2.7",
+        "toastify-js": "^1.12.0"
     }
 }

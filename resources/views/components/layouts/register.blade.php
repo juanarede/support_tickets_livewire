@@ -12,5 +12,6 @@
     <body>
         {{ $slot }}
         <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+        @vite('resources/js/register.js')
     </body>
 </html>
