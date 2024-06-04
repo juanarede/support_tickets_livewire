@@ -38,6 +38,7 @@ class Register extends Component
             'usuario' => $this->usuario,
             'email' => $this->email,
             'password' => Hash::make($this->password),
+
             'role' => $this->role,
             'puesto' => $this->role === 'agente' ? $this->puesto : null,
             'dependencia' => $this->role === 'agente' ? $this->dependencia : null,
