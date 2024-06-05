@@ -11,7 +11,7 @@ class CreateTicketsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
@@ -36,6 +36,7 @@ class CreateTicketsTable extends Migration
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.
