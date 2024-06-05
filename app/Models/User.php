@@ -9,22 +9,18 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class User extends Authenticatable implements HasMedia
 {
     use HasFactory, Notifiable, HasRoles;
     use InteractsWithMedia;
-    use HasRoles;
 
     protected $fillable = [
         'name',
         'email',
         'password',
         'jefe_id',
-
-
     ];
 
     protected $hidden = [
@@ -46,6 +42,6 @@ class User extends Authenticatable implements HasMedia
         $this->addMediaConversion('thumb')
               ->width(50)
               ->height(50);
-
     }
 }
+

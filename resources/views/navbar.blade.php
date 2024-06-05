@@ -39,15 +39,12 @@
                 </ul> --}}
             </div>
             <div class="hidden lg:flex lg:items-center gap-x-2">
-                <a class="hidden px-6 py-2 text-sm font-bold text-gray-900 transition duration-200 lg:inline-block lg:ml-auto lg:mr-3 bg-gray-50 hover:bg-gray-100 rounded-xl" href="{{ route('login') }}">Sign In</a>
-    <a class="hidden px-6 py-2 text-sm font-bold text-white transition duration-200 bg-black lg:inline-block hover:bg-gray-600 rounded-xl" href = "{{ route('register') }}">Sign up</a>
-
-
-    @livewire('layouts.avatar-dropdown')
-
-
-
-
+                @auth
+                    @livewire('layouts.avatar-dropdown')
+                @else
+                    <a class="hidden px-6 py-2 text-sm font-bold text-gray-900 transition duration-200 lg:inline-block lg:ml-auto lg:mr-3 bg-gray-50 hover:bg-gray-100 rounded-xl" href="{{ route('login') }}">Sign In</a>
+                    <a class="hidden px-6 py-2 text-sm font-bold text-white transition duration-200 bg-black lg:inline-block hover:bg-gray-600 rounded-xl" href="{{ route('register') }}">Sign Up</a>
+                @endauth
             </div>
         </div>
     </nav>

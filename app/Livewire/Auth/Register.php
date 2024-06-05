@@ -9,13 +9,12 @@ use Livewire\WithFileUploads;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Illuminate\Support\Facades\Auth;
-use Spatie\MediaLibrary\InteractsWithMedia;
+
 
 class Register extends Component
 {
     use WithFileUploads;
-    use InteractsWithMedia;
+
 
     public $usuario;
     public $email;
@@ -72,15 +71,9 @@ class Register extends Component
 
     public function render()
     {
-
-        $user = Auth::user();
-
-
-        $profileImage = $user->getFirstMediaUrl('profile', 'thumb');
-
         return view('livewire.auth.register', [
             'users' => User::all(),
-            'profileImage' => $profileImage,
+
         ])->layout('components.layouts.register');
     }
 }

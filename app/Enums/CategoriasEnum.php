@@ -8,18 +8,24 @@ enum CategoriasEnum: string
 {
     case EquipoDeComputo = 'equipo_de_computo';
     case Impresion = 'impresion';
-    case RedesYTelecomunicaciones = 'redes_y_telecomunicaciones'; 
-    case EquiposDeAudioYVideo = 'equipos_de_audio_y_video';
-    case PerifericosYAccesorios = 'perifericos_y_accesorios';
-    case SiteYDatacenter = 'site_y_datacenter';
+    case RedesyTelecomunicaciones = 'redes_y_telecomunicaciones';
+    case EquiposDeAudioyVideo = 'equipos_de_audio_y_video';
+    case PerifericosyAccesorios = 'perifericos_y_accesorios';
+    case SiteyDatacenter = 'site_y_datacenter';
 
     public function title(): string
     {
-        return Str::title($this->name);
+        return preg_replace_callback('/\b\w+\b/', function($match) {
+            if (strpos($match[0], 'y') !== false) {
+                return $match[0];
+            } else {
+                return Str::title($match[0]);
+            }
+        }, str_replace('_', ' ', $this->value));
     }
 
     public function name(): string
     {
-        return Str::lower($this->name);
+        return Str::lower($this->value);
     }
 }
