@@ -25,6 +25,7 @@
                 </div>
             </div>
             <div class="flex flex-wrap -mx-3">
+
                 <div class="w-full px-3 sm:w-1/2">
                     <div class="mb-5">
                         <label for="usuario" class="mb-3 block text-base font-medium text-[#07074D]">User</label>

@@ -4,34 +4,40 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Ticket extends Model
+class Ticket extends Model implements HasMedia
 {
     use HasFactory;
+    use InteractsWithMedia;
 
     protected $fillable = [
-        'IdTicket', 'Fecha_de_Creacion', 'Fecha_de_Cierre', 'Fecha_de_Actualizacion', 'Asunto',
-        'Comentario', 'UsuarioRemitente', 'EmailRemitente', 'UsuarioAsignado', 'EmailUsuarioAsignado',
-        'Status', 'idSLA', 'Categoria', 'NumerodeSerie', 'Modelo', 'NumerodeActivo', 'Prioridad', 'PrioridadAgente'
+        'fecha_de_cierre',
+        'asunto',
+        'comentario',
+        'estatus',
+        'id_sla',
+        'categoria',
+        'numero_de_serie',
+        'modelo',
+        'numero_de_activo',
+        'prioridad_cliente',
+        'prioridad_agente'
     ];
 
     public function parent()
     {
-        return $this->belongsTo(Ticket::class, 'IdTicket');
+        return $this->belongsTo(Ticket::class, 'parent_id');
     }
 
     public function children()
     {
-        return $this->hasMany(Ticket::class, 'IdTicket');
+        return $this->hasMany(Ticket::class, 'parent_id');
     }
 
-    public function detalles()
+    public function mensajes()
     {
-        return $this->hasMany(DetalleTicket::class, 'IdTicket');
-    }
-
-    public function adjuntos()
-    {
-        return $this->hasMany(AdjuntoTicket::class, 'IdTicket');
+        return $this->hasMany(Mensaje::class, 'ticket_id');
     }
 }

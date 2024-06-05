@@ -42,8 +42,8 @@
                 <a class="hidden px-6 py-2 text-sm font-bold text-gray-900 transition duration-200 lg:inline-block lg:ml-auto lg:mr-3 bg-gray-50 hover:bg-gray-100 rounded-xl" href="{{ route('login') }}">Sign In</a>
     <a class="hidden px-6 py-2 text-sm font-bold text-white transition duration-200 bg-black lg:inline-block hover:bg-gray-600 rounded-xl" href = "{{ route('register') }}">Sign up</a>
 
-{{--  
-    <img alt="tania andrew"
+
+    {{--  <img alt="tania andrew"
     src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1480&amp;q=80"
     class="relative inline-block object-cover object-center w-12 h-12 rounded-full cursor-pointer"
     data-popover-target="profile-menu" />

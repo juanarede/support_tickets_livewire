@@ -11,34 +11,32 @@ class CreateTicketsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('IdTicket')->nullable(); // For parent ticket relationship
-            $table->timestamp('Fecha_de_Creacion')->useCurrent();
-            $table->timestamp('Fecha_de_Cierre')->nullable();
-            $table->timestamp('Fecha_de_Actualizacion')->useCurrent()->nullable();
-            $table->string('Asunto');
-            $table->text('Comentario');
-            $table->string('UsuarioRemitente');
-            $table->string('EmailRemitente');
-            $table->string('UsuarioAsignado')->nullable();
-            $table->string('EmailUsuarioAsignado')->nullable();
-            $table->enum('Status', ['Abierto', 'Cerrado', 'Pendiente']);
-            $table->integer('idSLA');
-            $table->string('Categoria'); // Assuming categories are predefined strings
-            $table->string('NumerodeSerie')->nullable();
-            $table->text('Modelo')->nullable();
-            $table->string('NumerodeActivo')->nullable();
-            $table->string('Prioridad');
-            $table->string('PrioridadAgente')->nullable();
-            $table->timestamps();
 
-            // Foreign key constraint for parent ticket relationship
-            $table->foreign('IdTicket')->references('id')->on('tickets')->onDelete('cascade');
+            $table->datetime('fecha_de_cierre');
+            $table->string('asunto');
+            $table->text('comentario');
+            $table->string('estatus')->comment('opciones: abierto, cerrado, pediente');
+
+            $table->integer('id_sla');
+            $table->string('categoria')->comment('opciones: equipo_de_computo, impresion, etc.');
+            $table->string('numero_de_serie');
+            $table->string('modelo');
+            $table->string('numero_de_activo')->comment('numero de inventario');
+            $table->string('prioridad_cliente');
+            $table->string('prioridad_agente');
+
+            $table->foreignId('parent_id')->constrained('tickets');
+            $table->foreignId('cliente_id')->constrained('users');
+            $table->foreignId('agente_id')->constrained('users');
+
+            $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.
