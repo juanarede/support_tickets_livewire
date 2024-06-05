@@ -19,9 +19,11 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
 
-            $table->foreignId('jefe_id')->constrained('users')->nullable();
+            $table->foreignId('jefe_id')->nullable()->constrained('users')->default(null);
 
-            $table->text('detalles');
+
+            $table->text('detalles')->default('');
+
 
             $table->timestamps();
         });

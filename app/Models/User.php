@@ -8,8 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\MediaLibrary\HasMedia;
-use Spatie\Permission\Traits\HasRoles;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Image\Enums\Fit;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class User extends Authenticatable implements HasMedia
 {
@@ -18,15 +19,12 @@ class User extends Authenticatable implements HasMedia
     use HasRoles;
 
     protected $fillable = [
-        // 'usuario',
-        // 'email',
-        // 'puesto',
-        // 'dependencia',
-        // 'empresa',
-        // 'password',
-        // 'imagen',
-        // 'sueldo',
-        // 'role'
+        'name',
+        'email',
+        'password',
+        'jefe_id',
+
+
     ];
 
     protected $hidden = [
@@ -38,8 +36,16 @@ class User extends Authenticatable implements HasMedia
         'email_verified_at' => 'datetime',
     ];
 
-    public function jefe ()
+    public function jefe()
     {
         return $this->belongsTo(User::class, 'jefe_id');
+    }
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+              ->width(50)
+              ->height(50);
+
     }
 }

@@ -2,16 +2,31 @@
 
 namespace App\Livewire\Auth;
 
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+
+
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Illuminate\Support\Facades\Auth;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Register extends Component
 {
     use WithFileUploads;
+    use InteractsWithMedia;
 
-    public $usuario, $email, $password, $password_confirmation, $role, $puesto, $dependencia, $empresa, $imagen, $sueldo;
+    public $usuario;
+    public $email;
+    public $password;
+    public $password_confirmation;
+    public $role = 'usuario_externo';
+    public $puesto;
+    public $dependencia;
+    public $empresa;
+    public $imagen;
+    public $sueldo;
 
     protected $rules = [
         'usuario' => 'required|string|max:255',
@@ -25,17 +40,12 @@ class Register extends Component
         'sueldo' => 'nullable|numeric',
     ];
 
-    /**
-     * Registra un nuevo usuario.
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function register()
     {
         $this->validate();
 
         $user = User::create([
-            'usuario' => $this->usuario,
+            'name' => $this->usuario,
             'email' => $this->email,
             'password' => Hash::make($this->password),
             'role' => $this->role,
@@ -43,39 +53,35 @@ class Register extends Component
             'dependencia' => $this->role === 'agente' ? $this->dependencia : null,
             'empresa' => $this->role === 'usuario_externo' ? $this->empresa : null,
             'sueldo' => $this->role === 'agente' ? $this->sueldo : null,
-            'imagen' => $this->imagen ? $this->imagen->store('users', 'public') : null,
         ]);
+
+        if ($this->imagen) {
+            $user->addMedia($this->imagen->getRealPath())
+                 ->toMediaCollection('images');
+        }
 
         auth()->login($user);
 
         return redirect()->route('home');
     }
 
-    /**
-     * Establece el rol del usuario.
-     *
-     * @param  string  $role
-     * @return void
-     */
     public function setRole($role)
     {
         $this->role = $role;
     }
 
-    public function mount()
-    {
-        $this->setRole('usuario_externo');
-    }
-
-    public function deleteImage()
-    {
-        $this->imagen = null;
-    }
-
-
     public function render()
     {
-        return view('livewire.auth.register')
-            ->layout('components.layouts.register');
+
+        $user = Auth::user();
+
+
+        $profileImage = $user->getFirstMediaUrl('profile', 'thumb');
+
+        return view('livewire.auth.register', [
+            'users' => User::all(),
+            'profileImage' => $profileImage,
+        ])->layout('components.layouts.register');
     }
 }
+
