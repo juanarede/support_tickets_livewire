@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Enums\EstatusEnum;
+use App\Enums\PrioridadAgenteEnum;
+use App\Enums\PrioridadClienteEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -24,6 +27,12 @@ class Ticket extends Model implements HasMedia
         'numero_de_activo',
         'prioridad_cliente',
         'prioridad_agente'
+    ];
+
+    protected $casts = [
+        'estatus' => EstatusEnum::class,
+        'prioridad_cliente' => PrioridadClienteEnum::class,
+        'prioridad_agente' => PrioridadAgenteEnum::class,
     ];
 
     public function parent()
